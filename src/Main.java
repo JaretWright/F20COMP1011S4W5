@@ -9,7 +9,12 @@ import java.util.ArrayList;
 
 public class Main extends Application {
     public static void main(String[] args) {
-               launch(args);
+        try {
+            ArrayList<Patient> patients = DBUtility.getAllPatientsFromDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//               launch(args);
     }
 
     @Override
