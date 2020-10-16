@@ -1,5 +1,9 @@
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Patient {
     private int patientID;
@@ -81,8 +85,21 @@ public class Patient {
         return province;
     }
 
+    public static List<String> getProvinces()
+    {
+        List<String> provinces = Arrays.asList("NL","PE","NS","NB","QC","ON",
+                        "MB","SK","AB","BC","YT","NT","NU");
+        Collections.sort(provinces);
+        return provinces;
+    }
+
     public void setProvince(String province) {
-        this.province = province;
+        if (getProvinces().contains(province))
+            this.province = province;
+        else
+            throw new IllegalArgumentException("Province must be in the list: "+
+                    getProvinces());
+
     }
 
     public LocalDate getBirthday() {
