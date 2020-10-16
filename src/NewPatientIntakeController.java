@@ -34,4 +34,22 @@ public class NewPatientIntakeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         provinceComboBox.getItems().addAll(Patient.getProvinces());
     }
+
+    @FXML
+    private void createNewPatient()
+    {
+        try{
+            Patient newPatient = new Patient(
+                    firstNameTextField.getText(),
+                    lastNameTextField.getText(),
+                    phoneNumTextField.getText(),
+                    streetAddressTextField.getText(),
+                    cityTextField.getText(),
+                    provinceComboBox.getValue(),
+                    birthdayDatePicker.getValue());
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
 }

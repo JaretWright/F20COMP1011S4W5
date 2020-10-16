@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +13,18 @@ public class Patient {
     private String streetAddress, city, province;
     private LocalDate birthday;
 
+    /**
+     * This constructor will automatically add a valid Patient to the
+     * database
+     * @param firstName
+     * @param lastName
+     * @param phoneNum
+     * @param streetAddress
+     * @param city
+     * @param province
+     * @param birthday
+     * @throws SQLException
+     */
     public Patient(String firstName, String lastName, String phoneNum, String streetAddress, String city, String province, LocalDate birthday) throws SQLException {
         setFirstName(firstName);
         setLastName(lastName);
@@ -70,7 +83,11 @@ public class Patient {
     }
 
     public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
+        if (streetAddress.matches("[0-9]*\\s[A-z\\s]*"))
+            this.streetAddress = streetAddress;
+        else
+            throw new IllegalArgumentException("street address must have a number " +
+                    "followed by the street name");
     }
 
     public String getCity() {
@@ -78,7 +95,9 @@ public class Patient {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city.matches("[A-z]*"))
+            this.city = city;
+        throw new IllegalArgumentException("City must have letters");
     }
 
     public String getProvince() {
@@ -107,6 +126,10 @@ public class Patient {
     }
 
     public void setBirthday(LocalDate birthday) {
+        if (birthday.isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("Birthday cannot be in the future");
+        if (Period.between(LocalDate.now(), birthday).getYears()>250)
+            throw new IllegalArgumentException("Birthday for a new patient cannot be over 250 years ago");
         this.birthday = birthday;
     }
 }
