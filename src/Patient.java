@@ -95,7 +95,7 @@ public class Patient {
     }
 
     public void setCity(String city) {
-        if (city.matches("[A-z]*"))
+        if (city.matches("^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$"))
             this.city = city;
         throw new IllegalArgumentException("City must have letters");
     }
