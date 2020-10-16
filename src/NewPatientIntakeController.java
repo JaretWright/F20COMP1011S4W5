@@ -2,7 +2,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,14 +33,25 @@ public class NewPatientIntakeController implements Initializable {
     @FXML
     private TextField cityTextField;
 
+    @FXML
+    private Label msgLabel;
+
+    @FXML
+    private HBox hBox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        hBox.getChildren().remove(msgLabel);
         provinceComboBox.getItems().addAll(Patient.getProvinces());
     }
 
     @FXML
     private void createNewPatient()
     {
+        if (!hBox.getChildren().contains(msgLabel))
+            hBox.getChildren().add(1,msgLabel);
+
         try{
             Patient newPatient = new Patient(
                     firstNameTextField.getText(),
@@ -47,9 +61,13 @@ public class NewPatientIntakeController implements Initializable {
                     cityTextField.getText(),
                     provinceComboBox.getValue(),
                     birthdayDatePicker.getValue());
+
+            msgLabel.setTextFill(Color.BLACK);
+            msgLabel.setText(newPatient.toString());
         } catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            msgLabel.setTextFill(Color.RED);
+            msgLabel.setText(e.getMessage());
         }
     }
 }

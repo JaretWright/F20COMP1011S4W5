@@ -1,7 +1,6 @@
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +11,28 @@ public class Patient {
     private String phoneNum;
     private String streetAddress, city, province;
     private LocalDate birthday;
+
+    /**
+     * This constructor should be used for an existing patient already defined in the DB
+     * @param patientID
+     * @param firstName
+     * @param lastName
+     * @param phoneNum
+     * @param streetAddress
+     * @param city
+     * @param province
+     * @param birthday
+     */
+    public Patient(int patientID, String firstName, String lastName, String phoneNum, String streetAddress, String city, String province, LocalDate birthday) {
+        setPatientID(patientID);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneNum(phoneNum);
+        setStreetAddress(streetAddress);
+        setCity(city);
+        setProvince(province);
+        setBirthday(birthday);
+    }
 
     /**
      * This constructor will automatically add a valid Patient to the
@@ -97,7 +118,8 @@ public class Patient {
     public void setCity(String city) {
         if (city.matches("^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$"))
             this.city = city;
-        throw new IllegalArgumentException("City must have letters");
+        else
+            throw new IllegalArgumentException("City must have letters");
     }
 
     public String getProvince() {
@@ -131,5 +153,11 @@ public class Patient {
         if (Period.between(LocalDate.now(), birthday).getYears()>250)
             throw new IllegalArgumentException("Birthday for a new patient cannot be over 250 years ago");
         this.birthday = birthday;
+    }
+
+    public String toString()
+    {
+        return String.format("Patient #: %d-%s %s",
+                patientID, firstName, lastName);
     }
 }
