@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -7,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -69,5 +71,10 @@ public class NewPatientIntakeController implements Initializable {
             msgLabel.setTextFill(Color.RED);
             msgLabel.setText(e.getMessage());
         }
+    }
+
+    @FXML
+    private void viewAllPatients(ActionEvent event) throws IOException {
+        SceneChanger.changeScene(event,"patientTableView.fxml","Dr's Office");
     }
 }

@@ -17,7 +17,7 @@ public class SceneChanger {
         loader.setLocation(new Object(){}.getClass().getResource(viewName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("styles.css");
+//        scene.getStylesheets().add("styles.css");
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle(title);
